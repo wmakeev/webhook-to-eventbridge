@@ -1,6 +1,7 @@
 {
-  "name": "webhook-to-vensi-eventbrige",
+  "name": "webhook-to-eventbrige",
   "version": "1.0.0",
+  "private": true,
   "bin": {
     "app": "bin/app-synth.js"
   },
