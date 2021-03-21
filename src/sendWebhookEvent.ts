@@ -1,4 +1,4 @@
-import type { APIGatewayProxyEventV2 } from 'aws-lambda'
+import type { APIGatewayProxyEvent } from 'aws-lambda'
 import querystring from 'querystring'
 
 interface INotificationRepository {
@@ -17,45 +17,39 @@ interface INotificationRepository {
  *
  * And then extend the interface with a new type for a body property
  **/
-interface IEvent extends Omit<APIGatewayProxyEventV2, 'body'> {
+interface IEvent extends Omit<APIGatewayProxyEvent, 'body'> {
   body?:
     | string
-    | undefined
+    | null
     | {
         [key: string]: any
       }
 }
 
 export async function sendWebhookEvent(
-  event: APIGatewayProxyEventV2,
+  event: APIGatewayProxyEvent,
   notification: INotificationRepository
 ) {
-  try {
-    const eventCopy: IEvent = Object.assign({}, event)
+  const eventCopy: IEvent = Object.assign({}, event)
 
-    let body = event.body
+  let body = event.body
 
-    const contentType =
-      eventCopy.headers['Content-Type'] || eventCopy.headers['content-type']
+  const contentType =
+    eventCopy.headers['Content-Type'] || eventCopy.headers['content-type']
 
-    if (body) {
-      if (event.isBase64Encoded) {
-        body = Buffer.from(body, 'base64').toString('utf8')
-      }
-
-      if (contentType) {
-        if (/^application\/json($|;)/.test(contentType)) {
-          eventCopy.body = JSON.parse(body)
-        } else if (
-          /^application\/x-www-form-urlencoded($|;)/.test(contentType)
-        ) {
-          eventCopy.body = querystring.parse(body)
-        }
-      }
+  if (body) {
+    if (event.isBase64Encoded) {
+      body = Buffer.from(body, 'base64').toString('utf8')
     }
 
-    return await notification.send(eventCopy)
-  } catch (err) {
-    return await notification.send(event)
+    if (contentType) {
+      if (/^application\/json($|;)/.test(contentType)) {
+        eventCopy.body = JSON.parse(body)
+      } else if (/^application\/x-www-form-urlencoded($|;)/.test(contentType)) {
+        eventCopy.body = querystring.parse(body)
+      }
+    }
   }
+
+  return await notification.send(eventCopy)
 }
