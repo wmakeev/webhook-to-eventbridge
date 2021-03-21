@@ -1,6 +1,3 @@
-// Allow CloudWatch to read source maps
-import 'source-map-support/register'
-
 import type { APIGatewayProxyEventV2 } from 'aws-lambda'
 import { EventBridgeRepository } from './EventBridgeRepository'
 import { sendWebhookEvent } from './sendWebhookEvent'
