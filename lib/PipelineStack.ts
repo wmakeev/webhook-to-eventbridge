@@ -3,14 +3,10 @@ import { CdkPipeline, SimpleSynthAction } from '@aws-cdk/pipelines'
 import { Artifact } from '@aws-cdk/aws-codepipeline'
 import { Repository } from '@aws-cdk/aws-codecommit'
 import { CodeCommitSourceAction } from '@aws-cdk/aws-codepipeline-actions'
-import {
-  BuildEnvironmentVariableType,
-  LinuxBuildImage
-} from '@aws-cdk/aws-codebuild'
+import { LinuxBuildImage } from '@aws-cdk/aws-codebuild'
 
 export interface PipelineStackProps extends StackProps {
   repositoryName: string
-  npmTokenSsmParamName: string // TODO Сделать опциональным
   appStageFactories: Array<(scope: Stack) => Stage>
 }
 
@@ -45,19 +41,7 @@ export class PipelineStack extends Stack {
 
       cloudAssemblyArtifact,
 
-      environmentVariables: {
-        NPM_TOKEN: {
-          type: BuildEnvironmentVariableType.PARAMETER_STORE,
-          value: props.npmTokenSsmParamName
-        }
-      },
-
-      installCommand: [
-        'node -v',
-        'npm -v',
-        'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc',
-        'npm install'
-      ].join(' && '),
+      installCommand: ['node -v', 'npm -v', 'npm install'].join(' && '),
 
       // Use this if you need a build step (if you're not using ts-node
       // or if you have TypeScript Lambdas that need to be compiled).

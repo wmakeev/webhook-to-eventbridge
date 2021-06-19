@@ -6,19 +6,20 @@ import { App } from '@aws-cdk/core'
 import { PipelineStack } from '../lib/PipelineStack'
 import { AppStage } from '../lib/AppStage'
 
+const { CDK_DEFAULT_REGION, CDK_DEFAULT_ACCOUNT } = process.env
+
 const app = new App()
 
 const APP_NAME = AppStage.appName
 
 new PipelineStack(app, `${APP_NAME}-deploy`, {
   env: {
-    account: '910985846600',
-    region: 'eu-west-1'
+    account: CDK_DEFAULT_ACCOUNT,
+    region: CDK_DEFAULT_REGION
   },
   repositoryName: APP_NAME,
-  npmTokenSsmParamName: '/vensi/npm_token',
   appStageFactories: [
-    scope => new AppStage(scope, 'vensi', { eventBusName: 'vensi' })
+    scope => new AppStage(scope, 'prod', { eventBusName: 'webhook' })
   ]
 })
 

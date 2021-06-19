@@ -34,7 +34,7 @@ export class WebhookToEventbrigeStack extends Stack {
       environment: {
         EVENT_BUS_NAME: props.eventBusName
       },
-      description: `Webhook handler (${props.eventBusName})`
+      description: `Webhook handler (event bus - ${props.eventBusName})`
     })
 
     EventBus.grantAllPutEvents(handlerLambda)
