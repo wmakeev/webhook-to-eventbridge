@@ -1,18 +1,27 @@
 {
   "name": "webhook-to-eventbrige",
-  "version": "1.0.1",
+  "version": "2.0.0",
+  "description": "Generic Webhook to EventBridge event bus.",
   "private": true,
   "bin": {
     "app": "bin/app-synth.js"
   },
+  "author": "Vitaliy V. Makeev",
+  "license": "MIT",
+  "keywords": [
+    "aws",
+    "cdk",
+    "stack",
+    "webhook",
+    "eventbrige",
+    "eventbus"
+  ],
   "scripts": {
-    "watch": "tsc -w",
     "test": "echo 'no tests'",
     "cdk": "cdk",
     "build:app": "tsc",
     "build": "npm run build:app",
     "cdk:synth": "npx cdk synth",
-    "foo": "echo $bar",
     "cdk:deploy": "rm -rf cdk.out && npm run build && npx cdk deploy --profile $PROFILE"
   },
   "devDependencies": {

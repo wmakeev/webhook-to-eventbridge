@@ -25,8 +25,8 @@ export class EventBridgeRepository {
     const params: EventBridge.PutEventsRequest = {
       Entries: [
         {
-          Source: `webhook.${this.eventSource}`,
-          DetailType: this.eventSource, // TODO Возможность указать в параметрах url
+          Source: 'webhook',
+          DetailType: this.eventSource,
           EventBusName: this.eventBusName,
           Detail: JSON.stringify(message)
         }
