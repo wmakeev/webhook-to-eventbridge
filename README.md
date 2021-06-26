@@ -14,13 +14,19 @@
 
 5. Push to CodeCommit repository on branch `master`
 
-6. Deploy
+6. Install dependencies
+
+   ```sh
+   npm install
+   ```
+
+7. Deploy
 
    ```sh
    PROFILE=[AWS config profile] npm run cdk:deploy
    ```
 
-7. Crete event bus `webhook`
+8. Crete event bus `webhook`
 
 ## Handle webhook events
 
