@@ -41,7 +41,7 @@ export const handler: APIGatewayProxyHandler = async event => {
       },
       body: JSON.stringify({
         ok: false,
-        message: err.message
+        message: err instanceof Error ? err.message : JSON.stringify(err)
       })
     }
   }
