@@ -1,6 +1,6 @@
 {
-  "name": "webhook-to-eventbrige",
-  "version": "2.0.0",
+  "name": "webhook-to-eventbridge",
+  "version": "3.0.0",
   "description": "Generic Webhook to EventBridge event bus.",
   "private": true,
   "bin": {
@@ -13,7 +13,7 @@
     "cdk",
     "stack",
     "webhook",
-    "eventbrige",
+    "eventbridge",
     "eventbus"
   ],
   "scripts": {

@@ -1,4 +1,4 @@
-# Webhook to EventBrige (AWS CDK Stack)
+# Webhook to EventBridge (AWS CDK Stack)
 
 > Based on [generic-webhook-to-eventbridge](https://github.com/vacationtracker/generic-webhook-to-eventbridge)
 
@@ -6,7 +6,7 @@
 
 1. Fork and pull GitHub repository
 
-2. Create CodeCommit `webhook-to-eventbrige` repository
+2. Create CodeCommit `WebhookToEventBridge` repository
 
 3. Add CodeCommit repository to origin
 
@@ -38,7 +38,7 @@
    }
    ```
 
-2. Create EventBrige rule for "webhook" event bus
+2. Create EventBridge rule for "webhook" event bus
 
    - Rule name: `webhook-echo`
 

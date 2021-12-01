@@ -9,23 +9,23 @@ import {
   CfnOutput
 } from '@aws-cdk/core'
 
-export interface WebhookToEventbrigeStackProps extends StackProps {
+export interface WebhookToEventBridgeStackProps extends StackProps {
   eventBusName: string
 }
 
-export class WebhookToEventbrigeStack extends Stack {
-  public static appName = 'webhook-to-eventbrige'
+export class WebhookToEventBridgeStack extends Stack {
+  public static appName = 'WebhookToEventBridge'
 
   public readonly endpointUrlOutput: CfnOutput
 
   constructor(
     scope: Construct,
     id: string,
-    props: WebhookToEventbrigeStackProps
+    props: WebhookToEventBridgeStackProps
   ) {
     super(scope, id, props)
 
-    const handlerLambda = new Function(this, 'handler-lambda', {
+    const handlerLambda = new Function(this, 'HandlerLambda', {
       code: Code.fromAsset('./src'),
       handler: 'index.handler',
       runtime: Runtime.NODEJS_14_X,
@@ -39,7 +39,7 @@ export class WebhookToEventbrigeStack extends Stack {
 
     EventBus.grantAllPutEvents(handlerLambda)
 
-    const lambdaRestApi = new LambdaRestApi(this, 'endpoint', {
+    const lambdaRestApi = new LambdaRestApi(this, 'Endpoint', {
       handler: handlerLambda
     })
 

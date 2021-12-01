@@ -1,23 +1,23 @@
 import { CfnOutput, Construct, Stage } from '@aws-cdk/core'
 import {
-  WebhookToEventbrigeStack,
-  WebhookToEventbrigeStackProps
+  WebhookToEventBridgeStack,
+  WebhookToEventBridgeStackProps
 } from './AppStack'
 
 export class AppStage extends Stage {
   public readonly endpointUrlOutput: CfnOutput
-  public static appName = WebhookToEventbrigeStack.appName
+  public static appName = WebhookToEventBridgeStack.appName
 
   constructor(
     scope: Construct,
     id: string,
-    props: WebhookToEventbrigeStackProps
+    props: WebhookToEventBridgeStackProps
   ) {
     super(scope, id, props)
 
-    const stack = new WebhookToEventbrigeStack(
+    const stack = new WebhookToEventBridgeStack(
       this,
-      WebhookToEventbrigeStack.appName,
+      WebhookToEventBridgeStack.appName,
       props
     )
 

@@ -50,7 +50,7 @@ export class PipelineStack extends Stack {
       synthCommand: 'npx cdk synth'
     })
 
-    const pipeline = new CdkPipeline(this, 'pipeline', {
+    const pipeline = new CdkPipeline(this, 'Pipeline', {
       cloudAssemblyArtifact,
       sourceAction,
       synthAction
