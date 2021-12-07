@@ -53,7 +53,8 @@ export class PipelineStack extends Stack {
     const pipeline = new CdkPipeline(this, 'Pipeline', {
       cloudAssemblyArtifact,
       sourceAction,
-      synthAction
+      synthAction,
+      crossAccountKeys: false
     })
 
     props.appStageFactories.forEach(factory => {
