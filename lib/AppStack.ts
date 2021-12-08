@@ -32,6 +32,7 @@ export class WebhookToEventBridgeStack extends Stack {
       memorySize: 128,
       timeout: Duration.seconds(10),
       environment: {
+        NODE_OPTIONS: '--enable-source-maps',
         EVENT_BUS_NAME: props.eventBusName
       },
       description: `Webhook handler (event bus - ${props.eventBusName})`

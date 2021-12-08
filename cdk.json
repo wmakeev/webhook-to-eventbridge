@@ -1,5 +1,5 @@
 {
-  "app": "node bin/app-synth.js",
+  "app": "NODE_OPTIONS=--enable-source-maps node bin/app-synth.js",
   "context": {
     "@aws-cdk/core:enableStackNameDuplicates": "true",
     "aws-cdk:enableDiffNoFail": "true",
