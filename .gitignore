@@ -12,7 +12,6 @@ cdk.out
 
 # npm (mvv: веременно)
 .npmrc
-package-lock.json
 
 # build
 /dist
