@@ -33,6 +33,7 @@ const createStack = (app: App, stage: 'Prod' | 'Stage') => {
 }
 
 createStack(app, 'Prod')
-createStack(app, 'Stage')
+
+// createStack(app, 'Stage')
 
 app.synth()
