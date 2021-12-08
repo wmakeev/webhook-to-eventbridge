@@ -16,8 +16,14 @@ new PipelineStack(app, `${APP_NAME}CI`, {
     region: CDK_DEFAULT_REGION
   },
   repositoryName: APP_NAME,
+  description: `${APP_NAME} CI stack`,
   appStageFactories: [
-    scope => new AppStage(scope, 'Prod', { eventBusName: 'webhook' })
+    scope =>
+      new AppStage(scope, 'Prod', {
+        eventBusName: 'webhook',
+        description:
+          'Accepts webhooks from api endpoint and sends it to webhook event bus'
+      })
   ]
 })
 
