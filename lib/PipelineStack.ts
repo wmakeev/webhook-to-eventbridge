@@ -41,7 +41,10 @@ export class PipelineStack extends Stack {
 
       cloudAssemblyArtifact,
 
-      installCommand: ['node -v', 'npm -v', 'npm install'].join(' && '),
+      installCommand: [
+        'echo "Node.js $(node -v), NPM $(npm -v)"',
+        'npm ci'
+      ].join(' && '),
 
       // Use this if you need a build step (if you're not using ts-node
       // or if you have TypeScript Lambdas that need to be compiled).
