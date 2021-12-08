@@ -1,13 +1,25 @@
-import { Stack, StackProps, Construct, Stage } from '@aws-cdk/core'
-import { CdkPipeline, SimpleSynthAction } from '@aws-cdk/pipelines'
-import { Artifact } from '@aws-cdk/aws-codepipeline'
-import { Repository } from '@aws-cdk/aws-codecommit'
-import { CodeCommitSourceAction } from '@aws-cdk/aws-codepipeline-actions'
 import { LinuxBuildImage } from '@aws-cdk/aws-codebuild'
+import { Repository } from '@aws-cdk/aws-codecommit'
+import { Artifact } from '@aws-cdk/aws-codepipeline'
+import { CodeCommitSourceAction } from '@aws-cdk/aws-codepipeline-actions'
+import { Construct, Stack, StackProps } from '@aws-cdk/core'
+import { CdkPipeline, SimpleSynthAction } from '@aws-cdk/pipelines'
+import { AppStage } from './AppStage'
 
 export interface PipelineStackProps extends StackProps {
-  repositoryName: string
-  appStageFactories: Array<(scope: Stack) => Stage>
+  app: {
+    name: string
+    description: string
+  }
+
+  stage: 'Prod' | 'Stage'
+
+  repository: {
+    name: string
+    branch: string
+  }
+
+  eventBusName: string
 }
 
 export class PipelineStack extends Stack {
@@ -21,13 +33,13 @@ export class PipelineStack extends Stack {
     const codeCommitRepository = Repository.fromRepositoryName(
       this,
       'CodeCommitRepository',
-      props.repositoryName
+      props.repository.name
     )
 
     const sourceAction = new CodeCommitSourceAction({
       actionName: 'CodeCommitSourceAction',
       repository: codeCommitRepository,
-      branch: 'master',
+      branch: props.repository.branch,
       output: sourceArtifact
     })
 
@@ -60,8 +72,11 @@ export class PipelineStack extends Stack {
       crossAccountKeys: false
     })
 
-    props.appStageFactories.forEach(factory => {
-      pipeline.addApplicationStage(factory(this))
-    })
+    pipeline.addApplicationStage(
+      new AppStage(this, props.stage, {
+        app: props.app,
+        eventBusName: props.eventBusName
+      })
+    )
   }
 }

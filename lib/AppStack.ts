@@ -1,28 +1,23 @@
-import { Code, Runtime, Function } from '@aws-cdk/aws-lambda'
-import { EventBus } from '@aws-cdk/aws-events'
 import { LambdaRestApi } from '@aws-cdk/aws-apigateway'
+import { EventBus } from '@aws-cdk/aws-events'
+import { Code, Function, Runtime } from '@aws-cdk/aws-lambda'
 import {
-  Stack,
+  CfnOutput,
   Construct,
-  StackProps,
   Duration,
-  CfnOutput
+  Stack,
+  StackProps
 } from '@aws-cdk/core'
 
-export interface WebhookToEventBridgeStackProps extends StackProps {
+export interface AppStackProps extends StackProps {
+  stage: 'Prod' | 'Stage'
   eventBusName: string
 }
 
-export class WebhookToEventBridgeStack extends Stack {
-  public static appName = 'WebhookToEventBridge'
-
+export class AppStack extends Stack {
   public readonly endpointUrlOutput: CfnOutput
 
-  constructor(
-    scope: Construct,
-    id: string,
-    props: WebhookToEventBridgeStackProps
-  ) {
+  constructor(scope: Construct, id: string, props: AppStackProps) {
     super(scope, id, props)
 
     const handlerLambda = new Function(this, 'HandlerLambda', {
@@ -32,6 +27,7 @@ export class WebhookToEventBridgeStack extends Stack {
       memorySize: 128,
       timeout: Duration.seconds(10),
       environment: {
+        NODE_ENV: props.stage === 'Prod' ? 'production' : 'staging',
         NODE_OPTIONS: '--enable-source-maps',
         EVENT_BUS_NAME: props.eventBusName
       },

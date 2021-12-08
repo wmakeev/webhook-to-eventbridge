@@ -1,5 +1,5 @@
 {
-  "name": "webhook-to-eventbridge",
+  "name": "webhook-to-eventbridge-stack",
   "version": "3.0.1",
   "description": "Generic Webhook to EventBridge event bus.",
   "private": true,
@@ -17,12 +17,13 @@
     "eventbus"
   ],
   "scripts": {
-    "test": "echo 'no tests'",
-    "cdk": "cdk",
     "build:app": "tsc",
     "build": "npm run build:app",
     "cdk:synth": "npx cdk synth",
-    "cdk:deploy": "rm -rf cdk.out && npm run build && npx cdk deploy --profile $PROFILE"
+    "cdk:deploy": "rm -rf cdk.out && npm run build && npx cdk deploy --profile $PROFILE",
+    "test": "npm run build && npm run cdk:synth && echo 'no tests'",
+    "release": "np",
+    "deploy": "npx cdk deploy --profile $PROFILE"
   },
   "devDependencies": {
     "@aws-cdk/aws-apigateway": "1.134.0",
