@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { App } from '@aws-cdk/core'
-import { PipelineStage } from '../lib/PipelineStage'
+import { PipelineStack } from '../lib/PipelineStack'
 
 const { CDK_DEFAULT_REGION, CDK_DEFAULT_ACCOUNT } = process.env
 
@@ -12,20 +12,27 @@ const APP_NAME = 'WebhookToEventBridge'
 const APP_DESCRIPTION =
   'Accepts webhooks from api endpoint and sends it to webhook event bus'
 
-new PipelineStage(app, 'Prod', {
-  env: {
-    account: CDK_DEFAULT_ACCOUNT,
-    region: CDK_DEFAULT_REGION
-  },
+const createStack = (app: App, stage: 'Prod' | 'Stage') => {
+  new PipelineStack(app, `${stage}-${APP_NAME}CI`, {
+    env: {
+      account: CDK_DEFAULT_ACCOUNT,
+      region: CDK_DEFAULT_REGION
+    },
 
-  app: {
-    name: APP_NAME,
-    description: APP_DESCRIPTION
-  },
+    app: {
+      name: APP_NAME,
+      description: APP_DESCRIPTION
+    },
 
-  repositoryBranch: 'master',
+    stage,
 
-  eventBusName: 'webhook'
-})
+    repositoryBranch: stage === 'Prod' ? 'master' : 'stage',
+
+    eventBusName: stage === 'Prod' ? 'webhook' : 'webhook.stage'
+  })
+}
+
+createStack(app, 'Prod')
+createStack(app, 'Stage')
 
 app.synth()

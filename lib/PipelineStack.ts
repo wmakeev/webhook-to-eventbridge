@@ -14,10 +14,7 @@ export interface PipelineStackProps extends StackProps {
 
   stage: 'Prod' | 'Stage'
 
-  repository: {
-    name: string
-    branch: string
-  }
+  repositoryBranch: string
 
   eventBusName: string
 }
@@ -33,13 +30,13 @@ export class PipelineStack extends Stack {
     const codeCommitRepository = Repository.fromRepositoryName(
       this,
       'CodeCommitRepository',
-      props.repository.name
+      `${props.app.name}Stack`
     )
 
     const sourceAction = new CodeCommitSourceAction({
       actionName: 'CodeCommitSourceAction',
       repository: codeCommitRepository,
-      branch: props.repository.branch,
+      branch: props.repositoryBranch,
       output: sourceArtifact
     })
 
