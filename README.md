@@ -6,7 +6,7 @@
 
 1. Fork and pull GitHub repository
 
-2. Create CodeCommit `WebhookToEventBridge` repository
+2. Create CodeCommit `WebhookToEventBridgeStack` repository
 
 3. Add CodeCommit repository to origin
 
