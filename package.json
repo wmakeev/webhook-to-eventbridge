@@ -1,6 +1,6 @@
 {
   "name": "webhook-to-eventbridge-stack",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "description": "Generic Webhook to EventBridge event bus.",
   "private": true,
   "bin": {
