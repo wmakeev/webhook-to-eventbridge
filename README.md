@@ -23,7 +23,7 @@
 7. Deploy
 
    ```sh
-   PROFILE=[AWS config profile] npm run cdk:deploy
+   PROFILE=[AWS config profile] npm run deploy
    ```
 
 8. Crete event bus `webhook`

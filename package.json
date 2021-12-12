@@ -20,10 +20,9 @@
     "build:app": "tsc",
     "build": "npm run build:app",
     "cdk:synth": "npx cdk synth",
-    "cdk:deploy": "rm -rf cdk.out && npm run build && npx cdk deploy --profile $PROFILE",
     "test": "npm run build && npm run cdk:synth && echo 'no tests'",
     "release": "np",
-    "deploy": "npx cdk deploy --all --profile $PROFILE"
+    "deploy": "rm -rf cdk.out && npm run test && npx cdk deploy --all --profile $PROFILE"
   },
   "devDependencies": {
     "@aws-cdk/aws-apigateway": "1.134.0",
